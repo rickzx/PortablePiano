@@ -2,7 +2,7 @@ import pygame
 
 class Config(object):
 	display_width = 1024
-	display_height = 566
+	display_height = 600
 
 	white = (255,255,255)
 	black = (0,0,0)

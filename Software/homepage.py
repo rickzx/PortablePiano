@@ -5,6 +5,7 @@ import threading
 from config import *
 from util import *
 from status import *
+from composition import *
 
 def homePage():
 	gameDisplay = pygame.display.set_mode((Config.display_width, Config.display_height))

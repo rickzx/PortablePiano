@@ -3,9 +3,8 @@
 #include <CapacitiveSensor.h>
 
 #define total 80                   //define sensitivity, high value for decreases sensitivity, low value increases
-#define sensor 5                  //define number of samples Arduino takes, high value will increase stability while increasing response time
-#define debounce 300
-
+#define sensor 1                  //define number of samples Arduino takes, high value will increase stability while increasing response time
+#define debounce 50
 int led = 13;                                         
 long time = 0;
 
@@ -142,14 +141,15 @@ void loop()
     
     {
       
-       if(state == LOW){
-         state = HIGH;
-          }
-       else 
-         state = LOW;
+        state = LOW;
         time = millis();
-        Serial.println('a');     
+        Serial.println("c");     
        
+    }
+
+    else if (yes12 == false && previous12 == true){
+      state = HIGH;
+      Serial.println("cn");
     }
         
     
@@ -157,87 +157,85 @@ void loop()
 
     {
   
-       if(state == LOW){
-         state = HIGH;
-         }
-       else 
          state = LOW;
         time = millis();
-        Serial.println('b');     
+        Serial.println("c#");     
     
      }
-    
+    else if (yes11 == false && previous11 == true){
+      state = HIGH;
+      Serial.println("c#n");
+    }
    
     if(yes10 == true && previous10  == false && millis() - time>debounce)
     
     {
       
-       if(state == LOW){
-         state = HIGH;
-        }
-       else 
          state = LOW;
         time = millis();
-        Serial.println('c');     
+        Serial.println("d");     
        
     }
-   
+    else if (yes10 == false && previous10 == true){
+      state = HIGH;
+      Serial.println("dn");
+    }
   
     if(yes9 == true && previous9  == false && millis() - time>debounce)
     
     {
       
-       if(state == LOW){
-         state = HIGH;
-       }
-       else 
          state = LOW;
         time = millis();
-        Serial.println('d');     
+        Serial.println("d#");     
        
+    }
+   else if (yes9 == false && previous9 == true){
+      state = HIGH;
+      Serial.println("d#n");
     }
      
    if(yes8 == true && previous8  == false && millis() - time>debounce)
     
     {
       
-       if(state == LOW){
-         state = HIGH;
-       }
-       else 
          state = LOW;
         time = millis();
-        Serial.println('e');     
+        Serial.println("e");     
        
+    }
+    else if (yes8 == false && previous8 == true){
+      state = HIGH;
+      Serial.println("en");
     }
    
    if(yes7 == true && previous7  == false && millis() - time>debounce)
     
     {
-      
-       if(state == LOW){
-         state = HIGH;
-         }
-       else 
+
          state = LOW;
         time = millis();
-        Serial.println('f');     
+        Serial.println("f");     
        
     }
 
-
+    else if (yes7 == false && previous7 == true){
+      state = HIGH;
+      Serial.println("fn");
+    }
+    
   if(yes6 == true && previous6  == false && millis() - time>debounce)
     
     {
-      
-       if(state == LOW){
-         state = HIGH;
-       }
-       else 
+ 
          state = LOW;
         time = millis();
-        Serial.println('g');     
+        Serial.println("f#");     
        
+    }
+    else if (yes6 == false && previous6 == true){
+      state = HIGH;
+      Serial.println("f#n");
     }
 
  
@@ -245,75 +243,74 @@ void loop()
     
     {
       
-       if(state == LOW){
-         state = HIGH;
-       }
-       else 
          state = LOW;
         time = millis();
-        Serial.println('h');     
+        Serial.println("g");     
        
+    }
+    else if (yes5 == false && previous5 == true){
+      state = HIGH;
+      Serial.println("gn");
     }
 
 
    if(yes4 == true && previous4  == false && millis() - time>debounce)
     
     {
-      
-       if(state == LOW){
-         state = HIGH;
-       }
-       else 
+
          state = LOW;
         time = millis();
-        Serial.println('i');     
+        Serial.println("g#");     
        
+    }
+    else if (yes4 == false && previous4 == true){
+      state = HIGH;
+      Serial.println("g#n");
     }
 
 
     if(yes3 == true && previous3  == false && millis() - time>debounce)
     
     {
-      
-       if(state == LOW){
-         state = HIGH;
-       }
-       else 
+
          state = LOW;
         time = millis();
-        Serial.println('j');     
+        Serial.println("a");     
        
     }  
+    else if (yes3 == false && previous3 == true){
+      state = HIGH;
+      Serial.println("an");
+    }
 
 
     if(yes14 == true && previous14  == false && millis() - time>debounce)
     
     {
-      
-       if(state == LOW){
-         state = HIGH;
-          }
-       else 
+
          state = LOW;
         time = millis();
-        Serial.println('k');     
+        Serial.println("a#");     
        
+    }
+    else if (yes14 == false && previous14 == true){
+      state = HIGH;
+      Serial.println("a#n");
     }
 
     if(yes15 == true && previous15  == false && millis() - time>debounce)
     
     {
-      
-       if(state == LOW){
-         state = HIGH;
-          }
-       else 
+
          state = LOW;
         time = millis();
-        Serial.println('l');     
+        Serial.println("b");     
        
     }
-    
+    else if (yes15 == false && previous15 == true){
+      state = HIGH;
+      Serial.println("bn");
+    }
          
       digitalWrite(led, state);
       previous12 = yes12;
