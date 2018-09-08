@@ -5,6 +5,7 @@
 #define total 60                   //define sensitivity, high value for decreases sensitivity, low value increases
 #define sensor 3                  //define number of samples Arduino takes, high value will increase stability while increasing response time
 #define debounce 300
+>>>>>>> origin/software
 int led = 13;                                         
 long time = 0;
 
