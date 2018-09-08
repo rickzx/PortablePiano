@@ -10,8 +10,6 @@ int led = 13;
 
 int state = HIGH;
 
-boolean yes13;
-boolean previous13 = false;
 
 boolean yes12;
 boolean previous12 = false;
@@ -43,8 +41,14 @@ boolean previous4 = false;
 boolean yes3;
 boolean previous3 = false;
 
+boolean yes14;
+boolean previous14 = false;
 
-CapacitiveSensor   cs_2_13 = CapacitiveSensor(2,13);
+boolean yes15;
+boolean previous15 = false;
+
+
+//CapacitiveSensor   cs_2_13 = CapacitiveSensor(2,13);
 CapacitiveSensor   cs_2_12 = CapacitiveSensor(2,12);        // 2.2M resistor between pins 2 & 12, pin 2 is send pin, pin 12 is sensor pin
 CapacitiveSensor   cs_2_11 = CapacitiveSensor(2,11);        // 2.2M resistor between pins 2 & 11, pin 2 is send pin, pin 11 is sensor pin
 CapacitiveSensor   cs_2_10 = CapacitiveSensor(2,10);        // 2.2M resistor between pins 2 & 10, pin 2 is send pin, pin 10 is sensor pin
@@ -54,12 +58,14 @@ CapacitiveSensor   cs_2_7 = CapacitiveSensor(2,7);
 CapacitiveSensor   cs_2_6 = CapacitiveSensor(2,6);      
 CapacitiveSensor   cs_2_5 = CapacitiveSensor(2,5);        
 CapacitiveSensor   cs_2_4 = CapacitiveSensor(2,4);      
-CapacitiveSensor   cs_2_3 = CapacitiveSensor(2,3);       
+CapacitiveSensor   cs_2_3 = CapacitiveSensor(2,3);  
+CapacitiveSensor   cs_2_14 = CapacitiveSensor(2,14);   
+CapacitiveSensor   cs_2_15 = CapacitiveSensor(2,15);  
 
 
 void setup()                    
 {
-   cs_2_13.set_CS_AutocaL_Millis(0xFFFFFFFF);
+   //cs_2_13.set_CS_AutocaL_Millis(0xFFFFFFFF);
    cs_2_12.set_CS_AutocaL_Millis(0xFFFFFFFF);  //Calibrate the sensor... 
    cs_2_11.set_CS_AutocaL_Millis(0xFFFFFFFF);
    cs_2_10.set_CS_AutocaL_Millis(0xFFFFFFFF);
@@ -70,17 +76,19 @@ void setup()
    cs_2_5.set_CS_AutocaL_Millis(0xFFFFFFFF);
    cs_2_4.set_CS_AutocaL_Millis(0xFFFFFFFF);
    cs_2_3.set_CS_AutocaL_Millis(0xFFFFFFFF);
+   cs_2_14.set_CS_AutocaL_Millis(0xFFFFFFFF);
+   cs_2_15.set_CS_AutocaL_Millis(0xFFFFFFFF);
+
    pinMode(led, OUTPUT);
    Serial.begin(115200);
 }
 
-short int a=1,a1=0,b=1,b1=0,c=1,c1=0,d=1,d1=0,e=1,e1=0,f=1,f1=0,g=1,g1=0,h=1,h1=0,i=1,i1=0,j=1,j1=0, k=1, k1=0;  //for debounce purpose
+short int a=1,a1=0,b=1,b1=0,c=1,c1=0,d=1,d1=0,e=1,e1=0,f=1,f1=0,g=1,g1=0,h=1,h1=0,i=1,i1=0,j=1,j1=0,k=1,k1=0,l=1,l1=0;  //for debounce purpose
 
 
 void loop()                    
 {    
   
-    long total113 =  cs_2_13.capacitiveSensor(sensor)
     long total112 =  cs_2_12.capacitiveSensor(sensor);
     long total111 =  cs_2_11.capacitiveSensor(sensor);
     long total110 =  cs_2_10.capacitiveSensor(sensor);
@@ -91,9 +99,8 @@ void loop()
     long total15 =  cs_2_5.capacitiveSensor(sensor);
     long total14 =  cs_2_4.capacitiveSensor(sensor);
     long total13 =  cs_2_3.capacitiveSensor(sensor);
-
-    if (total113 > total){yes13 = true;}
-    else {yes13 = false;}
+    long total114 = cs_2_14.capacitiveSensor(sensor);
+    long total115 = cs_2_15.capacitiveSensor(sensor);
     
     if (total112 > total){yes12 = true;}
     else {yes12 = false;} 
@@ -124,30 +131,13 @@ void loop()
    
     if (total13 > total){yes3 = true;}
     else {yes3 = false;} 
+
+    if (total114 > total){yes14 = true;}
+    else {yes14 = false;}
+
+    if (total115 > total){yes15 = true;}
+    else {yes15 = false;}
      
-    if(yes13 == true && previous13  == false && a)
-    
-    {
-      
-       if(state == LOW){
-         state = HIGH;
-          }
-       else 
-         state = LOW;
-         k = 0;
-         k1 = 0;
-        Serial.println('k');     
-       
-    }
-    if(yes13 == false && previous13  == false)
-    k1++;
-    else
-    k1=0;
-    if(k1==replay)
-    {
-    k=1;
-    k1=0;
-    }    
     
     if(yes12 == true && previous12  == false && a)
     
@@ -394,10 +384,34 @@ void loop()
     j=1;
     j1=0;
     }    
+
+
+    if(yes14 == true && previous14  == false && a)
+    
+    {
+      
+       if(state == LOW){
+         state = HIGH;
+          }
+       else 
+         state = LOW;
+         k = 0;
+         k1 = 0;
+        Serial.println('k');     
+       
+    }
+    if(yes15 == false && previous15  == false)
+    k1++;
+    else
+    k1=0;
+    if(k1==replay)
+    {
+    k=1;
+    k1=0;
+    }    
     
          
       digitalWrite(led, state);
-      previous13 = yes13;
       previous12 = yes12;
       previous11 = yes11;
       previous10 = yes10;
@@ -408,10 +422,11 @@ void loop()
       previous5 = yes5;
       previous4 = yes4;
       previous3 = yes3;
-           
+      previous14 = yes14;
+      previous15 = yes15;
+        
      
   
-
       
       delay(2);
 
