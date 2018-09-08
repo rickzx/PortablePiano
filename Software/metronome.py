@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import pygame
 import time
 import threading
@@ -61,3 +62,27 @@ class Metronome(pygame.sprite.Sprite):
 
         if not pygame.mouse.get_pressed()[0]:
             Status.mouseDown = False
+=======
+import pygame, sys, math
+import time
+
+def PlayCounting(bpm, bpb):
+    sleep = 60 / bpm / bpb
+    counter = 0
+    metronomeSound = pygame.mixer.Sound("media/metronome_klack.wav")
+    while True:
+        if counter % bpb == 0:
+            metronomeSound.set_volume(1.0)
+            metronomeSound.play()
+        else:
+            metronomeSound.set_volume(0.6)
+            metronomeSound.play()
+        time.sleep(sleep)
+
+def main():
+    pygame.init()
+    PlayCounting(80, 2)
+
+if __name__ == '__main__':
+    main()
+>>>>>>> origin/software
