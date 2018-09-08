@@ -25,7 +25,7 @@ def homePage():
 
 		gameDisplay.fill(Config.white)
 
-		drawImage(gameDisplay, "media/background.jpg", Config.display_width//2, Config.display_height//2, (Config.display_width,Config.display_height))
+		#drawImage(gameDisplay, "media/background.jpg", Config.display_width//2, Config.display_height//2, (Config.display_width,Config.display_height))
 		drawImage(gameDisplay, "media/pianoop.png", Config.display_width//2, Config.display_height//2+50, (200,200))
 		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 180, "Courier New", 30, Config.black)
 
