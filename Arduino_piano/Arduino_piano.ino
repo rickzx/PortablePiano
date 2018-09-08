@@ -386,7 +386,7 @@ void loop()
     }    
 
 
-    if(yes14 == true && previous14  == false && a)
+    if(yes14 == true && previous14  == false && k)
     
     {
       
@@ -400,7 +400,7 @@ void loop()
         Serial.println('k');     
        
     }
-    if(yes15 == false && previous15  == false)
+    if(yes14 == false && previous14  == false)
     k1++;
     else
     k1=0;
@@ -408,7 +408,31 @@ void loop()
     {
     k=1;
     k1=0;
-    }    
+    }  
+
+    if(yes15 == true && previous15  == false && l)
+    
+    {
+      
+       if(state == LOW){
+         state = HIGH;
+          }
+       else 
+         state = LOW;
+         l = 0;
+         l1 = 0;
+        Serial.println('l');     
+       
+    }
+    if(yes15 == false && previous15  == false)
+    l1++;
+    else
+    l1=0;
+    if(l1==replay)
+    {
+    l=1;
+    l1=0;
+    } 
     
          
       digitalWrite(led, state);
