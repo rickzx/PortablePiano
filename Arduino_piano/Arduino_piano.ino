@@ -143,7 +143,6 @@ void loop()
       
        if(state == LOW){
          state = HIGH;
-         Serial.println('p');
           }
        else 
          state = LOW;
