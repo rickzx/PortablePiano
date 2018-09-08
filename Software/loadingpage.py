@@ -33,7 +33,10 @@ def loadingScreen():
 		rect.fill((255,255,255,Status.loadingAlpha))
 		gameDisplay.blit(rect,(Status.loadingSec,0))
 
-		Status.loadingAlpha = Status.loadingAlpha + 2 if Status.loadingAlpha <= 253 else 255
+		if Status.loadingAlpha <= 253 and Status.loadingSec > 100:
+			Status.loadingAlpha = Status.loadingAlpha + 5  
+		else:
+			Status.loadingAlpha
 
 		
 		pygame.display.update()
