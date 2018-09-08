@@ -9,10 +9,12 @@ class Staff(pygame.sprite.Sprite):
 		self.rect = (pos_x, pos_y, Config.display_width, Config.display_height)
 
 	def loadImg(self):
-		surface = pygame.Surface((Config.display_width, Config.display_height // 3))
+		surface = pygame.Surface((Config.display_width, 125))
 		surface.fill(Config.grey)
-		# for i in range(5):
-		# 	pygame.draw.line(surface, )
+		for i in range(5):
+			pygame.draw.line(surface, Config.black, (0, i * 10), (Config.display_width, i * 10))
+		for i in range(5):
+			pygame.draw.line(surface, Config.black, (0, 80 + i * 10), (Config.display_width, 80 + i * 10))
 		return surface
 
 	def update(self, seconds):

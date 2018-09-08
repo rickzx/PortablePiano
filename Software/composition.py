@@ -77,7 +77,7 @@ def composition():
 	Metronome._layer = 2
 
 	staff = Staff(0, 0)
-	metronome = Metronome(0, 0)
+	metronome = Metronome(0, 500)
 
 	while intro:
 		milliseconds = clock.tick_busy_loop(Config.fps)  # milliseconds passed since last frame
@@ -124,8 +124,9 @@ def readFromPort(serialName, serialPort):
 			if Status.isQuit:
 				break
 			line = ser.readline().strip()
-
+			print "1"
 			if line:
+				print line
 				Status.curNote = line
 				playSound(Status.curNote)
 
