@@ -5,6 +5,7 @@ import threading
 from config import *
 from util import *
 from status import *
+from staff import *
 
 def playSound(serialStr):
 	if serialStr == 'a':
@@ -36,11 +37,23 @@ def playSound(serialStr):
 def composition():
 	gameDisplay = pygame.display.set_mode((Config.display_width, Config.display_height))
 	clock = pygame.time.Clock()
+	background = pygame.Surface((gameDisplay.get_size()))
 
 	intro = True
 	pygame.mixer.init()
 
+	staffGroup = pygame.sprite.Group()
+	allGroups = pygame.sprite.LayeredUpdates()
+
+	Staff.groups = staffGroup, allGroups
+	Staff._layer = 1
+
+	staff = Staff()
+
 	while intro:
+		milliseconds = clock.tick(Config.fps)  # milliseconds passed since last frame
+		seconds = milliseconds / 1000.0
+
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				pygame.quit()
@@ -52,6 +65,10 @@ def composition():
 		click = pygame.mouse.get_pressed()
 
 		gameDisplay.fill(Config.white)
+
+		allGroups.clear(gameDisplay, background)
+		allGroups.update(seconds)
+		allGroups.draw(gameDisplay)
 
 
 		if math.sqrt((mouse[0]-980)**2+(mouse[1]-50)**2) <= 15:
