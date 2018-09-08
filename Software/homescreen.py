@@ -25,14 +25,24 @@ def homeScreen():
 
 		gameDisplay.fill(Config.white)
 
-<<<<<<< Updated upstream:Software/homescreen.py
-		drawImage(gameDisplay, "media/logo.png", Config.display_width//2, Config.display_height//2 - 30, (500,500))
-		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 150, "Courier New", 30, Config.black)
-=======
-		drawImage(gameDisplay, "media/background.jpg", Config.display_width//2, Config.display_height//2, (Config.display_width,Config.display_height))
-		drawImage(gameDisplay, "media/pianoop.png", Config.display_width//2, Config.display_height//2+50, (200,200))
-		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 180, "Courier New", 30, Config.black)
->>>>>>> Stashed changes:Software/homepage.py
+
+		drawImage(gameDisplay, "media/background.jpeg", Config.display_width//2, Config.display_height//2, (Config.display_width,Config.display_height))
+		icon5 = pygame.image.load("media/icon-5.png")
+		icon6 = pygame.image.load("media/icon-6.png")
+		icon7 = pygame.image.load("media/icon-7.png")
+		icon8 = pygame.image.load("media/icon-8.png")
+		icon8 = pygame.transform.rotate(icon8, -90)
+		icon6 = pygame.transform.rotate(icon6, -36)
+		icon5 = pygame.transform.rotate(icon5, 36)
+		icon7 = pygame.transform.rotate(icon7, 90)
+		gameDisplay.blit(icon8, (Config.display_width//2+45, Config.display_height//2+160))
+		gameDisplay.blit(icon6, (Config.display_width//2-25, Config.display_height//2-80))
+		gameDisplay.blit(icon5, (Config.display_width//2-200, Config.display_height//2-85))
+		gameDisplay.blit(icon7, (Config.display_width//2-230, Config.display_height//2+160))
+		drawImage(gameDisplay, "media/pianoop.png", Config.display_width//2+30, Config.display_height-150, (350,350))
+		
+		
+
 
 		if math.sqrt((mouse[0]-980)**2+(mouse[1]-50)**2) <= 15:
 			pygame.draw.circle(gameDisplay, Config.grey, (980,50), 15)
@@ -57,10 +67,10 @@ def readFromPort(serialName, serialPort):
 	while True:
 		if Status.isQuit:
 			break
-		print ser.readline()
+		print (ser.readline())
 
 
-def main():
+def runHomescreen():
 	pygame.init()
 	thread = threading.Thread(target=readFromPort, args=('/dev/cu.usbmodem1411', Config.serialPort,))
 	thread.start()
@@ -68,4 +78,4 @@ def main():
 
 
 if __name__ == '__main__':
-	main()
+	runHomescreen()

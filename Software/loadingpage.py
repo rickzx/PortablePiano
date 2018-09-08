@@ -5,7 +5,7 @@ import threading
 from config import *
 from util import *
 from status import *
-from homepage import *
+from homescreen import *
 
 def loadingScreen():
 	gameDisplay = pygame.display.set_mode((Config.display_width, Config.display_height))
@@ -27,7 +27,7 @@ def loadingScreen():
 		gameDisplay.fill(Config.white)
 
 		drawImage(gameDisplay, "media/logo.png", Config.display_width//2, Config.display_height//2 - 30, (500, 500))
-		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 50, "Courier New", 30, Config.black)
+		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 100, "Courier New", 30, Config.black)
 
 		rect = pygame.Surface((Config.display_width, Config.display_height), pygame.SRCALPHA)
 		rect.fill((255,255,255,Status.loadingAlpha))
@@ -44,7 +44,7 @@ def loadingScreen():
 		Status.loadingSec += 1
 		if Status.loadingSec == Status.loadingLimit:
 			intro = False
-			runHomepage()
+			runHomescreen()
 
 		clock.tick(60)
 
