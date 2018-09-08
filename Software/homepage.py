@@ -6,7 +6,7 @@ from config import *
 from util import *
 from status import *
 
-def homeScreen():
+def homePage():
 	gameDisplay = pygame.display.set_mode((Config.display_width, Config.display_height))
 	clock = pygame.time.Clock()
 
@@ -25,8 +25,8 @@ def homeScreen():
 
 		gameDisplay.fill(Config.white)
 
-		drawImage(gameDisplay, "media/logo.png", Config.display_width//2, Config.display_height//2 - 30, (500,500))
-		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 150, "Courier New", 30, Config.black)
+		drawImage(gameDisplay, "media/background.jpg", Config.display_width//2, Config.display_height//2, (Config.display_width,Config.display_height))
+		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 180, "Courier New", 30, Config.black)
 
 		if math.sqrt((mouse[0]-980)**2+(mouse[1]-50)**2) <= 15:
 			pygame.draw.circle(gameDisplay, Config.grey, (980,50), 15)
@@ -47,19 +47,22 @@ def homeScreen():
 		clock.tick(60)
 
 def readFromPort(serialName, serialPort):
-	ser = serial.Serial(serialName, serialPort, timeout=1)
-	while True:
-		if Status.isQuit:
-			break
-		print ser.readline()
+	try:
+		ser = serial.Serial(serialName, serialPort, timeout=1)
+		while True:
+			if Status.isQuit:
+				break
+			print ser.readline()
+	except:
+		pass
 
 
-def main():
+def runHomepage():
 	pygame.init()
 	thread = threading.Thread(target=readFromPort, args=('/dev/cu.usbmodem1411', Config.serialPort,))
 	thread.start()
-	homeScreen()
+	homePage()
 
 
 if __name__ == '__main__':
-	main()
+	runHomepage()
