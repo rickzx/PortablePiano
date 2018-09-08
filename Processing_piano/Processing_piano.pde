@@ -188,7 +188,18 @@ void draw()
      text("LA", 80, 90); 
       }        
       
-         
+     if(val.charAt(0)=='k')
+      {
+      song49.rewind();
+      song49.play();
+     
+     fill(0, 0, 0);
+     rect(0, 0, 160, 160);            
+     fill(255, 255, 255);
+     textAlign(CENTER);      
+     textSize(50);  
+     text("LA#", 80, 90); 
+      }          
                            
  }         
        }

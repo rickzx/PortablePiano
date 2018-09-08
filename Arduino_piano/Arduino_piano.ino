@@ -10,6 +10,9 @@ int led = 13;
 
 int state = HIGH;
 
+boolean yes13;
+boolean previous13 = false;
+
 boolean yes12;
 boolean previous12 = false;
 
@@ -41,6 +44,7 @@ boolean yes3;
 boolean previous3 = false;
 
 
+CapacitiveSensor   cs_2_13 = CapacitiveSensor(2,13);
 CapacitiveSensor   cs_2_12 = CapacitiveSensor(2,12);        // 2.2M resistor between pins 2 & 12, pin 2 is send pin, pin 12 is sensor pin
 CapacitiveSensor   cs_2_11 = CapacitiveSensor(2,11);        // 2.2M resistor between pins 2 & 11, pin 2 is send pin, pin 11 is sensor pin
 CapacitiveSensor   cs_2_10 = CapacitiveSensor(2,10);        // 2.2M resistor between pins 2 & 10, pin 2 is send pin, pin 10 is sensor pin
@@ -55,6 +59,7 @@ CapacitiveSensor   cs_2_3 = CapacitiveSensor(2,3);
 
 void setup()                    
 {
+   cs_2_13.set_CS_AutocaL_Millis(0xFFFFFFFF);
    cs_2_12.set_CS_AutocaL_Millis(0xFFFFFFFF);  //Calibrate the sensor... 
    cs_2_11.set_CS_AutocaL_Millis(0xFFFFFFFF);
    cs_2_10.set_CS_AutocaL_Millis(0xFFFFFFFF);
@@ -69,13 +74,13 @@ void setup()
    Serial.begin(115200);
 }
 
-short int a=1,a1=0,b=1,b1=0,c=1,c1=0,d=1,d1=0,e=1,e1=0,f=1,f1=0,g=1,g1=0,h=1,h1=0,i=1,i1=0,j=1,j1=0;  //for debounce purpose
+short int a=1,a1=0,b=1,b1=0,c=1,c1=0,d=1,d1=0,e=1,e1=0,f=1,f1=0,g=1,g1=0,h=1,h1=0,i=1,i1=0,j=1,j1=0, k=1, k1=0;  //for debounce purpose
 
 
 void loop()                    
 {    
   
-  
+    long total113 =  cs_2_13.capacitiveSensor(sensor)
     long total112 =  cs_2_12.capacitiveSensor(sensor);
     long total111 =  cs_2_11.capacitiveSensor(sensor);
     long total110 =  cs_2_10.capacitiveSensor(sensor);
@@ -86,6 +91,9 @@ void loop()
     long total15 =  cs_2_5.capacitiveSensor(sensor);
     long total14 =  cs_2_4.capacitiveSensor(sensor);
     long total13 =  cs_2_3.capacitiveSensor(sensor);
+
+    if (total113 > total){yes13 = true;}
+    else {yes13 = false;}
     
     if (total112 > total){yes12 = true;}
     else {yes12 = false;} 
@@ -117,7 +125,29 @@ void loop()
     if (total13 > total){yes3 = true;}
     else {yes3 = false;} 
      
+    if(yes13 == true && previous13  == false && a)
     
+    {
+      
+       if(state == LOW){
+         state = HIGH;
+          }
+       else 
+         state = LOW;
+         k = 0;
+         k1 = 0;
+        Serial.println('k');     
+       
+    }
+    if(yes13 == false && previous13  == false)
+    k1++;
+    else
+    k1=0;
+    if(k1==replay)
+    {
+    k=1;
+    k1=0;
+    }    
     
     if(yes12 == true && previous12  == false && a)
     
@@ -367,6 +397,7 @@ void loop()
     
          
       digitalWrite(led, state);
+      previous13 = yes13;
       previous12 = yes12;
       previous11 = yes11;
       previous10 = yes10;
