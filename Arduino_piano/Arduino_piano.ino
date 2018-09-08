@@ -2,9 +2,9 @@
 
 #include <CapacitiveSensor.h>
 
-#define total 80                   //define sensitivity, high value for decreases sensitivity, low value increases
-#define sensor 5                  //define number of samples Arduino takes, high value will increase stability while increasing response time
-#define debounce 500
+#define total 60                   //define sensitivity, high value for decreases sensitivity, low value increases
+#define sensor 3                  //define number of samples Arduino takes, high value will increase stability while increasing response time
+#define debounce 300
 int led = 13;                                         
 long time = 0;
 
