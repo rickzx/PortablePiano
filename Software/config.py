@@ -1,6 +1,6 @@
 class Config(object):
-	display_width = 800
-	display_height = 600
+	display_width = 1024
+	display_height = 566
 
 	white = (255,255,255)
 	black = (0,0,0)
