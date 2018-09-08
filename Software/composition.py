@@ -6,11 +6,39 @@ from config import *
 from util import *
 from status import *
 
-def homeScreen():
+def playSound(serialStr):
+	if serialStr == 'a':
+		Sound.C.play()
+	elif serialStr == 'b':
+		Sound.Cs.play()
+	elif serialStr == 'c':
+		Sound.D.play()
+	elif serialStr == 'd':
+		Sound.Ds.play()
+	elif serialStr == 'e':
+		Sound.E.play()
+	elif serialStr == 'f':
+		Sound.F.play()
+	elif serialStr == 'g':
+		Sound.Fs.play()
+	elif serialStr == 'h':
+		Sound.G.play()
+	elif serialStr == 'i':
+		Sound.Gs.play()
+	elif serialStr == 'j':
+		Sound.A.play()
+	elif serialStr == 'k':
+		Sound.As.play()
+	elif serialStr == 'l':
+		Sound.B.play()
+
+
+def composition():
 	gameDisplay = pygame.display.set_mode((Config.display_width, Config.display_height))
 	clock = pygame.time.Clock()
 
 	intro = True
+	pygame.mixer.init()
 
 	while intro:
 		for event in pygame.event.get():
@@ -25,14 +53,6 @@ def homeScreen():
 
 		gameDisplay.fill(Config.white)
 
-<<<<<<< Updated upstream:Software/homescreen.py
-		drawImage(gameDisplay, "media/logo.png", Config.display_width//2, Config.display_height//2 - 30, (500,500))
-		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 150, "Courier New", 30, Config.black)
-=======
-		drawImage(gameDisplay, "media/background.jpg", Config.display_width//2, Config.display_height//2, (Config.display_width,Config.display_height))
-		drawImage(gameDisplay, "media/pianoop.png", Config.display_width//2, Config.display_height//2+50, (200,200))
-		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 180, "Courier New", 30, Config.black)
->>>>>>> Stashed changes:Software/homepage.py
 
 		if math.sqrt((mouse[0]-980)**2+(mouse[1]-50)**2) <= 15:
 			pygame.draw.circle(gameDisplay, Config.grey, (980,50), 15)
@@ -53,19 +73,28 @@ def homeScreen():
 		clock.tick(60)
 
 def readFromPort(serialName, serialPort):
-	ser = serial.Serial(serialName, serialPort, timeout=1)
-	while True:
-		if Status.isQuit:
-			break
-		print ser.readline()
+	try:
+		ser = serial.Serial(serialName, serialPort, timeout=1)
+		while True:
+			if Status.isQuit:
+				break
+			line = ser.readline()
+			print line
+			if line and line[0].isalpha():
+				print line[0]
+				Status.curNote = line[0]
+				playSound(Status.curNote)
+
+	except:
+		pass
 
 
-def main():
+def runComposition():
 	pygame.init()
 	thread = threading.Thread(target=readFromPort, args=('/dev/cu.usbmodem1411', Config.serialPort,))
 	thread.start()
-	homeScreen()
+	composition()
 
 
 if __name__ == '__main__':
-	main()
+	runComposition()
