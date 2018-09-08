@@ -2,7 +2,7 @@ import pygame, sys, math
 import time
 
 def PlayCounting(bpm, bpb):
-    sleep = 60 / bpm
+    sleep = 60.0 / bpm
     counter = 0
     metronomeSound = pygame.mixer.Sound("media/metronome_klack.wav")
     while True:
@@ -16,7 +16,7 @@ def PlayCounting(bpm, bpb):
 
 def main():
     pygame.init()
-    PlayCounting(80, 2)
+    PlayCounting(60, 2)
 
 if __name__ == '__main__':
     main()
