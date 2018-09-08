@@ -17,7 +17,7 @@ class Config(object):
 class Sound(object):
 	pygame.mixer.init()
 	C = pygame.mixer.Sound("media/sound/C4.ogg")
-	Cs = pygame.mixer.Sound("media/sound/C4.ogg")
+	Cs = pygame.mixer.Sound("media/sound/C#.ogg")
 	D = pygame.mixer.Sound("media/sound/D4.ogg")
 	Ds = pygame.mixer.Sound("media/sound/D#.ogg")
 	E = pygame.mixer.Sound("media/sound/E.ogg")
@@ -26,5 +26,5 @@ class Sound(object):
 	G = pygame.mixer.Sound("media/sound/G.ogg")
 	Gs = pygame.mixer.Sound("media/sound/G#.ogg")
 	A = pygame.mixer.Sound("media/sound/A4.ogg")
-	As = pygame.mixer.Sound("media/sound/A4.ogg")
+	As = pygame.mixer.Sound("media/sound/A#.ogg")
 	B = pygame.mixer.Sound("media/sound/B.ogg")
