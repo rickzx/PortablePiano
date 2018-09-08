@@ -2,7 +2,7 @@ import pygame
 
 def drawImage(surface, path, x, y, scale):
 	img = pygame.image.load(path)
-	img = pygame.transform.smoothscale(img, scale)
+	img = pygame.transform.scale(img, scale)
 	surface.blit(img,(x - img.get_rect().size[0] // 2, y - img.get_rect().size[1] // 2))
 
 def text_objects(text, font, color):

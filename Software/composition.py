@@ -6,32 +6,57 @@ from config import *
 from util import *
 from status import *
 from staff import *
+from metronome import *
 
 def playSound(serialStr):
-	if serialStr == 'a':
+	if serialStr == 'c':
 		Sound.C.play()
-	elif serialStr == 'b':
+	elif serialStr == 'cn':
+		Sound.C.stop()
+	elif serialStr == 'c#':
 		Sound.Cs.play()
-	elif serialStr == 'c':
-		Sound.D.play()
+	elif serialStr == 'c#n':
+		Sound.Cs.stop()
 	elif serialStr == 'd':
+		Sound.D.play()
+	elif serialStr == 'dn':
+		Sound.D.stop()
+	elif serialStr == 'd#':
 		Sound.Ds.play()
+	elif serialStr == 'd#n':
+		Sound.Ds.stop()
 	elif serialStr == 'e':
 		Sound.E.play()
+	elif serialStr == 'en':
+		Sound.E.stop()
 	elif serialStr == 'f':
 		Sound.F.play()
-	elif serialStr == 'g':
+	elif serialStr == 'fn':
+		Sound.F.stop()
+	elif serialStr == 'f#':
 		Sound.Fs.play()
-	elif serialStr == 'h':
+	elif serialStr == 'f#n':
+		Sound.Fs.stop()
+	elif serialStr == 'g':
 		Sound.G.play()
-	elif serialStr == 'i':
+	elif serialStr == 'gn':
+		Sound.G.stop()
+	elif serialStr == 'g#':
 		Sound.Gs.play()
-	elif serialStr == 'j':
+	elif serialStr == 'g#n':
+		Sound.Gs.stop()
+	elif serialStr == 'a':
 		Sound.A.play()
-	elif serialStr == 'k':
+	elif serialStr == 'an':
+		Sound.A.stop()
+	elif serialStr == 'a#':
 		Sound.As.play()
-	elif serialStr == 'l':
+	elif serialStr == 'a#n':
+		Sound.As.stop()
+	elif serialStr == 'b':
 		Sound.B.play()
+	elif serialStr == 'bn':
+		Sound.B.stop()
 
 
 def composition():
@@ -43,15 +68,19 @@ def composition():
 	pygame.mixer.init()
 
 	staffGroup = pygame.sprite.Group()
+	metronomeGroup = pygame.sprite.Group()
 	allGroups = pygame.sprite.LayeredUpdates()
 
 	Staff.groups = staffGroup, allGroups
+	Metronome.groups = metronomeGroup, allGroups
 	Staff._layer = 1
+	Metronome._layer = 2
 
-	staff = Staff()
+	staff = Staff(0, 0)
+	metronome = Metronome(0, 0)
 
 	while intro:
-		milliseconds = clock.tick(Config.fps)  # milliseconds passed since last frame
+		milliseconds = clock.tick_busy_loop(Config.fps)  # milliseconds passed since last frame
 		seconds = milliseconds / 1000.0
 
 		for event in pygame.event.get():
@@ -87,7 +116,6 @@ def composition():
 
 		
 		pygame.display.update()
-		clock.tick(60)
 
 def readFromPort(serialName, serialPort):
 	try:
@@ -95,11 +123,10 @@ def readFromPort(serialName, serialPort):
 		while True:
 			if Status.isQuit:
 				break
-			line = ser.readline()
-			print line
-			if line and line[0].isalpha():
-				print line[0]
-				Status.curNote = line[0]
+			line = ser.readline().strip()
+
+			if line:
+				Status.curNote = line
 				playSound(Status.curNote)
 
 	except:
