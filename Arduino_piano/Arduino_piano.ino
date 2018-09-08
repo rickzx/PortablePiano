@@ -2,11 +2,11 @@
 
 #include <CapacitiveSensor.h>
 
-#define total 10                   //define sensitivity, high value for decreases sensitivity, low value increases
-#define sensor 1                  //define number of samples Arduino takes, high value will increase stability while increasing response time
-#define replay 35                 //define debouncing, high value will increase stability while increasing response time
+#define total 80                   //define sensitivity, high value for decreases sensitivity, low value increases
+#define sensor 5                  //define number of samples Arduino takes, high value will increase stability while increasing response time
+#define debounce 500
 int led = 13;                                         
-
+long time = 0;
 
 int state = HIGH;
 
@@ -83,8 +83,6 @@ void setup()
    Serial.begin(115200);
 }
 
-short int a=1,a1=0,b=1,b1=0,c=1,c1=0,d=1,d1=0,e=1,e1=0,f=1,f1=0,g=1,g1=0,h=1,h1=0,i=1,i1=0,j=1,j1=0,k=1,k1=0,l=1,l1=0;  //for debounce purpose
-
 
 void loop()                    
 {    
@@ -139,7 +137,7 @@ void loop()
     else {yes15 = false;}
      
     
-    if(yes12 == true && previous12  == false && a)
+    if(yes12 == true && previous12  == false && millis() - time>debounce)
     
     {
       
@@ -148,23 +146,13 @@ void loop()
           }
        else 
          state = LOW;
-         a = 0;
-         a1 = 0;
+        time = millis();
         Serial.println('a');     
        
     }
-    if(yes12 == false && previous12  == false)
-    a1++;
-    else
-    a1=0;
-    if(a1==replay)
-    {
-    a=1;
-    a1=0;
-    }
         
     
-    if(yes11 == true && previous11  == false && b)
+    if(yes11 == true && previous11  == false && millis() - time>debounce)
 
     {
   
@@ -173,23 +161,13 @@ void loop()
          }
        else 
          state = LOW;
-         b = 0;
-         b1 = 0;
+        time = millis();
         Serial.println('b');     
     
      }
-    if(yes11 == false && previous11  == false)
-    b1++;
-    else
-    b1=0;
-    if(b1==replay)
-    {
-    b=1;
-    b1=0;
-    }
     
    
-    if(yes10 == true && previous10  == false && c)
+    if(yes10 == true && previous10  == false && millis() - time>debounce)
     
     {
       
@@ -198,23 +176,13 @@ void loop()
         }
        else 
          state = LOW;
-         c = 0;
-         c1 = 0;
+        time = millis();
         Serial.println('c');     
        
     }
-    if(yes10== false && previous10  == false)
-    c1++;
-    else
-    c1=0;
-    if(c1==replay)
-    {
-    c=1;
-    c1=0;
-    }
    
   
-    if(yes9 == true && previous9  == false && d)
+    if(yes9 == true && previous9  == false && millis() - time>debounce)
     
     {
       
@@ -223,22 +191,12 @@ void loop()
        }
        else 
          state = LOW;
-         d = 0;
-         d1 = 0;
+        time = millis();
         Serial.println('d');     
        
     }
-    if(yes9== false && previous9  == false)
-    d1++;
-    else
-    d1=0;
-    if(d1==replay)
-    {
-    d=1;
-    d1=0;
-    }
      
-   if(yes8 == true && previous8  == false && e)
+   if(yes8 == true && previous8  == false && millis() - time>debounce)
     
     {
       
@@ -247,22 +205,12 @@ void loop()
        }
        else 
          state = LOW;
-         e = 0;
-         e1 = 0;
+        time = millis();
         Serial.println('e');     
        
     }
-    if(yes8== false && previous8  == false)
-    e1++;
-    else
-    e1=0;
-    if(e1==replay)
-    {
-    e=1;
-    e1=0;
-    }
    
-   if(yes7 == true && previous7  == false && f)
+   if(yes7 == true && previous7  == false && millis() - time>debounce)
     
     {
       
@@ -271,22 +219,13 @@ void loop()
          }
        else 
          state = LOW;
-         f = 0;
-         f1 = 0;
+        time = millis();
         Serial.println('f');     
        
     }
-    if(yes7== false && previous7  == false)
-    f1++;
-    else
-    f1=0;
-    if(f1==replay)
-    {
-    f=1;
-    f1=0;
-    }
-  
-  if(yes6 == true && previous6  == false && g)
+
+
+  if(yes6 == true && previous6  == false && millis() - time>debounce)
     
     {
       
@@ -295,23 +234,13 @@ void loop()
        }
        else 
          state = LOW;
-         g = 0;
-         g1 = 0;
+        time = millis();
         Serial.println('g');     
        
     }
-    if(yes6== false && previous6  == false)
-    g1++;
-    else
-    g1=0;
-    if(g1==replay)
-    {
-    g=1;
-    g1=0;
-    }
+
  
- 
-  if(yes5 == true && previous5  == false && h)
+  if(yes5 == true && previous5  == false && millis() - time>debounce)
     
     {
       
@@ -320,23 +249,13 @@ void loop()
        }
        else 
          state = LOW;
-         h = 0;
-         h1 = 0;
+        time = millis();
         Serial.println('h');     
        
     }
-    if(yes5== false && previous5  == false)
-    h1++;
-    else
-    h1=0;
-    if(h1==replay)
-    {
-    h=1;
-    h1=0;
-    }
 
 
-   if(yes4 == true && previous4  == false && i)
+   if(yes4 == true && previous4  == false && millis() - time>debounce)
     
     {
       
@@ -345,23 +264,13 @@ void loop()
        }
        else 
          state = LOW;
-         i = 0;
-         i1 = 0;
+        time = millis();
         Serial.println('i');     
        
     }
-    if(yes4== false && previous4  == false)
-    i1++;
-    else
-    i1=0;
-    if(i1==replay)
-    {
-    i=1;
-    i1=0;
-    }
 
 
-    if(yes3 == true && previous3  == false && j)
+    if(yes3 == true && previous3  == false && millis() - time>debounce)
     
     {
       
@@ -370,23 +279,13 @@ void loop()
        }
        else 
          state = LOW;
-         j = 0;
-         j1 = 0;
+        time = millis();
         Serial.println('j');     
        
-    }
-    if(yes3== false && previous3  == false)
-    j1++;
-    else
-    j1=0;
-    if(j1==replay)
-    {
-    j=1;
-    j1=0;
-    }    
+    }  
 
 
-    if(yes14 == true && previous14  == false && k)
+    if(yes14 == true && previous14  == false && millis() - time>debounce)
     
     {
       
@@ -395,22 +294,12 @@ void loop()
           }
        else 
          state = LOW;
-         k = 0;
-         k1 = 0;
+        time = millis();
         Serial.println('k');     
        
     }
-    if(yes14 == false && previous14  == false)
-    k1++;
-    else
-    k1=0;
-    if(k1==replay)
-    {
-    k=1;
-    k1=0;
-    }  
 
-    if(yes15 == true && previous15  == false && l)
+    if(yes15 == true && previous15  == false && millis() - time>debounce)
     
     {
       
@@ -419,20 +308,10 @@ void loop()
           }
        else 
          state = LOW;
-         l = 0;
-         l1 = 0;
+        time = millis();
         Serial.println('l');     
        
     }
-    if(yes15 == false && previous15  == false)
-    l1++;
-    else
-    l1=0;
-    if(l1==replay)
-    {
-    l=1;
-    l1=0;
-    } 
     
          
       digitalWrite(led, state);
