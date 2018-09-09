@@ -26,7 +26,7 @@ def loadingScreen():
 
 		gameDisplay.fill(Config.white)
 
-		drawImage(gameDisplay, "media/logo.png", Config.display_width//2, Config.display_height//2 - 30, (500, 500))
+		drawImage(gameDisplay, "media/logo.png", Config.display_width//2, Config.display_height//2 - 20, (500, 500))
 		drawText(gameDisplay, "P I A N E E R", Config.display_width//2, Config.display_height//2 + 100, "Courier New", 30, Config.black)
 
 		rect = pygame.Surface((Config.display_width, Config.display_height), pygame.SRCALPHA)
@@ -34,7 +34,7 @@ def loadingScreen():
 		gameDisplay.blit(rect,(Status.loadingSec,0))
 
 		if Status.loadingAlpha <= 253 and Status.loadingSec > 100:
-			Status.loadingAlpha = Status.loadingAlpha + 5  
+			Status.loadingAlpha = Status.loadingAlpha + 3  
 		else:
 			Status.loadingAlpha
 
