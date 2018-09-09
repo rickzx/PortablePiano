@@ -48,7 +48,7 @@ class CompositionPage():
         self.scrollHori = 0
         self.scrollVerti = 0
         self.numLines = 1
-        self.colors = [(21,199,208),(241,90,36),(237,28,36),(202,244,239), (73,165,109),(115,99,86)]
+        # self.colors = [(21,199,208),(241,90,36),(237,28,36),(202,244,239), (73,165,109),(115,99,86)]
         self.notes = []
     
     def putBars(self, note):
@@ -129,7 +129,7 @@ class CompositionPage():
     def drawBar(self, surface, noteX, noteY):
         i = random.randint(0, 5)
         
-        AAfilledRoundedRect(surface, (noteX-self.scrollHori, noteY, 50, 36), self.colors[i])
+        AAfilledRoundedRect(surface, (noteX-self.scrollHori, noteY, 50, 36), (254,241,0))
         
     def draw(self,surface):
         #draw deviding lines
@@ -198,7 +198,7 @@ class CompositionPage():
             elif pygame.Rect(5, 345, 50, 50).collidepoint(event.pos):
                 pass
             else:
-                newNote = Note("c3", 0, 1)
+                newNote = Note("c4", 0, 1)
                 noteY = self.putBars(newNote.note)
                 print(newNote.x)
                 print(noteY)

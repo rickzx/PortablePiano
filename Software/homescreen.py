@@ -5,6 +5,8 @@ import threading
 from config import *
 from util import *
 from status import *
+from practiceMode import *
+from compositionMode import *
 
 class Homepage(object):
 
@@ -54,6 +56,10 @@ class Homepage(object):
 			self.w5show = True
 			self.w7show = False
 			self.w8show = False
+			if pygame.mouse.get_pressed()[0] == 1:
+				self.w8show = False
+				cp = CompositionPage()
+				cp.runCM()
 		elif x>=Config.display_width//2 and x < Config.display_width//2+300 and y <= Config.display_height//2+100 and y >= Config.display_height//2-200:
 			(self.icon6x, self.icon6y) = (min(self.icon6xF, self.icon6x+30), min(self.icon6yF, self.icon6y+30))
 			self.w6show = True
@@ -72,6 +78,11 @@ class Homepage(object):
 			(self.icon5x, self.icon5y) = (self.icon5xS, self.icon5yS)
 			(self.icon8x, self.icon8y) = (self.icon8xS, self.icon8yS)
 			(self.icon6x, self.icon6y) = (self.icon6xS, self.icon6yS)
+			if pygame.mouse.get_pressed()[0] == 1:
+				self.w7show = False
+				pp = PracticePage()
+				pp.runPM()
+				
 		elif x>=Config.display_width*2//3 and y>= Config.display_height//2+100:
 			self.w6show = False
 			self.w5show = False
@@ -81,6 +92,8 @@ class Homepage(object):
 			(self.icon5x, self.icon5y) = (self.icon5xS, self.icon5yS)
 			(self.icon7x, self.icon7y) = (self.icon7xS, self.icon7yS)
 			(self.icon6x, self.icon6y) = (self.icon6xS, self.icon6yS)
+			
+				
 		else:
 			self.w6show = False
 			self.w5show = False
