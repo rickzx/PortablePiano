@@ -124,9 +124,9 @@ def readFromPort(serialName, serialPort):
 			if Status.isQuit:
 				break
 			line = ser.readline().strip()
-			print "1"
+			print ("1")
 			if line:
-				print line
+				print (line)
 				Status.curNote = line
 				playSound(Status.curNote)
 
