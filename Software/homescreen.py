@@ -6,76 +6,116 @@ from config import *
 from util import *
 from status import *
 
-def homeScreen():
-	gameDisplay = pygame.display.set_mode((Config.display_width, Config.display_height))
-	clock = pygame.time.Clock()
+class Homepage(object):
 
-	intro = True
-
-	while intro:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				pygame.quit()
-				Status.isQuit = True
-				intro = False
-				sys.exit()
-
-		mouse = pygame.mouse.get_pos()
-		click = pygame.mouse.get_pressed()
-
-		gameDisplay.fill(Config.white)
-
-
-		drawImage(gameDisplay, "media/background.jpeg", Config.display_width//2, Config.display_height//2, (Config.display_width,Config.display_height))
-		icon5 = pygame.image.load("media/icon-5.png")
-		icon6 = pygame.image.load("media/icon-6.png")
-		icon7 = pygame.image.load("media/icon-7.png")
-		icon8 = pygame.image.load("media/icon-8.png")
-		icon8 = pygame.transform.rotate(icon8, -90)
-		icon6 = pygame.transform.rotate(icon6, -36)
-		icon5 = pygame.transform.rotate(icon5, 36)
-		icon7 = pygame.transform.rotate(icon7, 90)
-		gameDisplay.blit(icon8, (Config.display_width//2+45, Config.display_height//2+160))
-		gameDisplay.blit(icon6, (Config.display_width//2-25, Config.display_height//2-80))
-		gameDisplay.blit(icon5, (Config.display_width//2-200, Config.display_height//2-85))
-		gameDisplay.blit(icon7, (Config.display_width//2-230, Config.display_height//2+160))
-		drawImage(gameDisplay, "media/pianoop.png", Config.display_width//2+30, Config.display_height-150, (350,350))
-		
-		
-
-
-		if math.sqrt((mouse[0]-980)**2+(mouse[1]-50)**2) <= 15:
-			pygame.draw.circle(gameDisplay, Config.grey, (980,50), 15)
-			pygame.draw.line(gameDisplay, Config.black, (970,40), (988,60), 2)
-			pygame.draw.line(gameDisplay, Config.black, (988,40), (970,60), 2)
-			if click[0] == 1:
-				pygame.quit()
-				Status.isQuit = True
-				intro = False
-				sys.exit()
-		else:
-			pygame.draw.circle(gameDisplay, Config.darkGrey, (980,50), 15)
-			pygame.draw.line(gameDisplay, Config.black, (970,40), (988,60), 2)
-			pygame.draw.line(gameDisplay, Config.black, (988,40), (970,60), 2)
-
-		
-		pygame.display.update()
-		clock.tick(60)
-
+	def __init__(self):
+		self.icon5 = pygame.image.load("media/icon-5.png")
+		self.icon6 = pygame.image.load("media/icon-6.png")
+		self.icon7 = pygame.image.load("media/icon-7.png")
+		self.icon8 = pygame.image.load("media/icon-8.png")
+		self.icon8 = pygame.transform.rotate(self.icon8, -90)
+		self.icon6 = pygame.transform.rotate(self.icon6, -36)
+		self.icon5 = pygame.transform.rotate(self.icon5, 36)
+		self.icon7 = pygame.transform.rotate(self.icon7, 90)
+		(self.icon5x, self.icon5y) = (Config.display_width//2-200, Config.display_height//2-85)
+		(self.icon5xF, self.icon5yF) = (self.icon5x-60, self.icon5y-75)
+		(self.icon5xS, self.icon5yS) = (self.icon5x, self.icon5y)
+		(self.icon6x, self.icon6y) = (Config.display_width//2-25, Config.display_height//2-80)
+		(self.icon7x, self.icon7y) = (Config.display_width//2-230, Config.display_height//2+160)
+		(self.icon8x, self.icon8y) = (Config.display_width//2+45, Config.display_height//2+160)
+		(self.icon6xS, self.icon6yS) = (self.icon6x, self.icon6y)
+		(self.icon7xS, self.icon7yS) = (self.icon7x, self.icon7y)
+		(self.icon8xS, self.icon8yS) = (self.icon8x, self.icon8y)
+		(self.icon6xF, self.icon6yF) = (self.icon6x+60, self.icon6y-75)
+		(self.icon7xF, self.icon7yF) = (self.icon7x-60, self.icon7y)
+		(self.icon8xF, self.icon8yF) = (self.icon8x+70, self.icon8y)
+	
+	def expanding(self):
+		x, y = pygame.mouse.get_pos()
+		if  x<=Config.display_width//2 and x > Config.display_width//2-300 and y <= Config.display_height//2+100 and y >= Config.display_height//2-200:
+			(self.icon7x, self.icon7y) = (self.icon7xS, self.icon7yS)
+			(self.icon8x, self.icon8y) = (self.icon8xS, self.icon8yS)
+			(self.icon6x, self.icon6y) = (self.icon6xS, self.icon6yS)
+			(self.icon5x, self.icon5y) = (max(self.icon5xF, self.icon5x-30), max(self.icon5yF, self.icon5y-30))
+		elif x>=Config.display_width//2 and x < Config.display_width//2+300 and y <= Config.display_height//2+100 and y >= Config.display_height//2-200:
+			(self.icon6x, self.icon6y) = (min(self.icon6xF, self.icon6x+30), min(self.icon6yF, self.icon6y+30))
+			(self.icon5x, self.icon5y) = (self.icon5xS, self.icon5yS)
+			(self.icon8x, self.icon8y) = (self.icon8xS, self.icon8yS)
+			(self.icon7x, self.icon7y) = (self.icon7xS, self.icon7yS)
+		elif x<=Config.display_width//3 and y >= Config.display_height//2+100:
+			(self.icon7x, self.icon7y) = (max(self.icon7xF, self.icon7x-25), self.icon7yF)
+			(self.icon5x, self.icon5y) = (self.icon5xS, self.icon5yS)
+			(self.icon8x, self.icon8y) = (self.icon8xS, self.icon8yS)
+			(self.icon6x, self.icon6y) = (self.icon6xS, self.icon6yS)
+		elif x>=Config.display_width*2//3 and y>= Config.display_height//2+100:
+			(self.icon8x, self.icon8y) = (max(self.icon8xF, self.icon8x-25), self.icon8yF)
+			(self.icon5x, self.icon5y) = (self.icon5xS, self.icon5yS)
+			(self.icon7x, self.icon7y) = (self.icon7xS, self.icon7yS)
+			(self.icon6x, self.icon6y) = (self.icon6xS, self.icon6yS)
+	
+	
+	def homeScreen(self):
+		gameDisplay = pygame.display.set_mode((Config.display_width, Config.display_height))
+		clock = pygame.time.Clock()
+	
+		intro = True
+	
+		while intro:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					Status.isQuit = True
+					intro = False
+					sys.exit()
+	
+			mouse = pygame.mouse.get_pos()
+			click = pygame.mouse.get_pressed()
+	
+			gameDisplay.fill(Config.white)
+			self.expanding()
+			drawImage(gameDisplay, "media/background.jpeg", Config.display_width//2, Config.display_height//2, (Config.display_width,Config.display_height))
+			gameDisplay.blit(self.icon8, (self.icon8x, self.icon8y))
+			gameDisplay.blit(self.icon6, (self.icon6x, self.icon6y))
+			gameDisplay.blit(self.icon5, (self.icon5x, self.icon5y))
+			gameDisplay.blit(self.icon7, (self.icon7x, self.icon7y))
+			drawImage(gameDisplay, "media/pianoop.png", Config.display_width//2+30, Config.display_height-150, (350,350))
+			
+			
+	
+	
+			if math.sqrt((mouse[0]-980)**2+(mouse[1]-50)**2) <= 15:
+				pygame.draw.circle(gameDisplay, Config.grey, (980,50), 15)
+				pygame.draw.line(gameDisplay, Config.black, (970,40), (988,60), 2)
+				pygame.draw.line(gameDisplay, Config.black, (988,40), (970,60), 2)
+				if click[0] == 1:
+					pygame.quit()
+					Status.isQuit = True
+					intro = False
+					sys.exit()
+			else:
+				pygame.draw.circle(gameDisplay, Config.darkGrey, (980,50), 15)
+				pygame.draw.line(gameDisplay, Config.black, (970,40), (988,60), 2)
+				pygame.draw.line(gameDisplay, Config.black, (988,40), (970,60), 2)
+	
+			
+			pygame.display.update()
+			clock.tick(60)
+	
 def readFromPort(serialName, serialPort):
 	ser = serial.Serial(serialName, serialPort, timeout=1)
 	while True:
 		if Status.isQuit:
 			break
 		print (ser.readline())
-
-
+	
+	
 def runHomescreen():
 	pygame.init()
-	thread = threading.Thread(target=readFromPort, args=('/dev/cu.usbmodem1411', Config.serialPort,))
-	thread.start()
-	homeScreen()
-
-
+	#thread = threading.Thread(target=readFromPort, args=('/dev/cu.Bluetooth-Incoming-Port', Config.serialPort,))
+	#thread.start()
+	h = Homepage()
+	h.homeScreen()
+	
+	
 if __name__ == '__main__':
 	runHomescreen()
