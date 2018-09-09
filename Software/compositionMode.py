@@ -11,15 +11,13 @@ import pygame.gfxdraw
 from roundedRect import *
 from homescreen import *
 from noteClass import *
+import keyboardForComp as kb
 
 
 class CompositionPage():
     
     def __init__(self):
-        self.noteY = -100
         self.curX = 1024
-        self.curY1 = 46
-        self.curY2 = 264
         self.clock = pygame.time.Clock()
         pygame.font.init()
         self.menufont = pygame.font.SysFont('comicsansms', 25, bold = False)
@@ -48,89 +46,18 @@ class CompositionPage():
         self.scrollHori = 0
         self.scrollVerti = 0
         self.numLines = 1
-        # self.colors = [(21,199,208),(241,90,36),(237,28,36),(202,244,239), (73,165,109),(115,99,86)]
+        self.colors = [(21,199,208),(241,90,36),(237,28,36),(202,244,239), (73,165,109),(115,99,86)]
         self.notes = []
-    
-    def putBars(self, note):
-        if (note == "c3" or note == "c#3"):
-            noteY = 136 + self.scrollVerti
-            return noteY
-        elif (note == "b2"):
-            noteY = 154 + self.scrollVerti
-            return noteY
-        elif (note == "a2" or note == "a#2"):
-            noteY = 172 + self.scrollVerti
-            return noteY
-        elif (note == "g2" or note == "g#2"):
-            noteY = 210 + self.scrollVerti
-            return noteY
-        elif (note == "f2" or note == "f#2"):
-            noteY = 228 + self.scrollVerti
-            return noteY
-        elif (note == "e2"):
-            noteY = 246 + self.scrollVerti
-            return noteY
-        elif (note == "d2" or note == "d#2"):
-            self.scrollVerti -= 36
-            noteY = 264 + self.scrollVerti
-            return noteY
-        elif (note == "c2" or note == "c#2"):
-            self.scrollVerti -= 36-18
-            noteY = 282 + self.scrollVerti
-            return noteY
-        elif (note == "d3" or note == "d#3"):
-            noteY = 118 + self.scrollVerti
-            return noteY
-        elif (note == "e3"):
-            noteY = 100 + self.scrollVerti
-            return noteY
-        elif (note == "f3" or note == "f#3"):
-            noteY = 82 + self.scrollVerti
-            return noteY
-        elif (note == "g3" or note == "g#3"):
-            noteY = 64 + self.scrollVerti
-            return noteY
-        elif (note == "a3" or note == "a#3"):
-            noteY = 46 + self.scrollVerti
-            return noteY
-        elif (note == "b3"):
-            self.scrollVerti += 36
-            noteY = 28 + self.scrollVerti
-            return noteY
-        elif (note == "c4" or note == "c#4"):
-            self.scrollVerti += 36 + 18
-            noteY = 10 + self.scrollVerti
-            return noteY
-        elif (note == "d4" or note == "d#4"):
-            self.scrollVerti += 36*2
-            noteY = -8 + self.scrollVerti
-            return noteY
-        elif (note == "e4"):
-            self.scrollVerti += 36*2+18
-            noteY = -26 + self.scrollVerti
-            return noteY
-        elif (note == "f4" or note == "f#4"):
-            self.scrollVerti += 36*3
-            noteY = -44 + self.scrollVerti
-            return noteY
-        elif (note == "g4" or note == "g#4"):
-            self.scrollVerti += 36*3+18
-            noteY = -62 + self.scrollVerti
-            return noteY
-        elif (note == "a4" or note == "a#4"):
-            self.scrollVerti += 36*4
-            noteY = -80 + self.scrollVerti
-            return noteY
-        elif (note == "b4"):
-            self.scrollVerti += 36*4+18
-            noteY = -98 + self.scrollVerti
-            return noteY
+        self.myKeyboard = kb.Keyboard(60,400)
             
-    def drawBar(self, surface, noteX, noteY):
+    def drawBar(self, surface, note):
         i = random.randint(0, 5)
+        pygame.draw.rect(surface, (254,241,0), (note.x-self.scrollHori, note.y, 50, 36), 0)
+
         
-        AAfilledRoundedRect(surface, (noteX-self.scrollHori, noteY, 50, 36), (254,241,0))
-        
+    def drawKeyboard(self):
+        self.myKeyboard.draw(self.gameDisplay)
+
     def draw(self,surface):
         #draw deviding lines
         #pygame.draw.rect(self.gameDisplay, Config.black, ((0,0,60,60)),0)
@@ -180,6 +107,10 @@ class CompositionPage():
         if self.curX < 400:
             self.numLines += 1
             self.curX = 1024
+        for n in self.notes:
+            self.drawBar(self.gameDisplay, n)
+
+        self.drawKeyboard()
             
         
             
@@ -198,11 +129,15 @@ class CompositionPage():
             elif pygame.Rect(5, 345, 50, 50).collidepoint(event.pos):
                 pass
             else:
-                newNote = Note("c4", 0, 1)
-                noteY = self.putBars(newNote.note)
+                newNote = Note("c3", 60, 0, 1)
+                noteY = newNote.putBars(newNote.note)
                 print(newNote.x)
                 print(noteY)
-                self.drawBar(self.gameDisplay, newNote.x, noteY)
+                self.notes.append(newNote)
+                
+                newNote2 = Note("c4", 60, 0 ,1)
+                noteY2 = newNote2.putBars(newNote2.note)
+                self.notes.append(newNote)
             
                 
 
@@ -227,6 +162,27 @@ class CompositionPage():
             pygame.display.update()
             self.clock.tick(60)
             
+    def midiOut(self, tempo):
+        mf = MIDIFile(1)     # only 1 track
+        track = 0   # the only track
+        
+        time = 0    # start at the beginning
+        mf.addTrackName(track, time, "midiOut")
+        mf.addTempo(track, time, 120)
+        
+        # add some notes
+        channel = 0
+        volume = 100
+        
+        for n in self.notes:
+            pitch = n.pitch
+            time = n.time
+            duration = n.duration
+            mf.addNote(track, channel, pitch, time, duration, volume)
+        
+        with open("output.mid", 'wb') as outf:
+            mf.writeFile(outf)
+                    
 
     def runCM(self):
         pygame.init()
